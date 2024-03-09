@@ -9,6 +9,8 @@ from transformers import BertTokenizer, BertForSequenceClassification
 from transformers import BertTokenizer
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler, TensorDataset
 import torch
+import warnings
+warnings.filterwarnings('ignore')
 
 # Stopwords list
 stop_words = set(stopwords.words('english'))
@@ -156,7 +158,8 @@ for sent in df['Text']:
     encoded_dict = tokenizer.encode_plus(
                         sent,                      # Sentence to encode.
                         add_special_tokens = True, # Add '[CLS]' and '[SEP]'
-                        max_length = 64,           # Pad & truncate all sentences.
+                        truncation = True,         # Truncate sentences to `max_length`
+                        max_length = 256,          # Pad & truncate all sentences.
                         pad_to_max_length = True,
                         return_attention_mask = True,   # Construct attn. masks.
                         return_tensors = 'pt',     # Return pytorch tensors.
