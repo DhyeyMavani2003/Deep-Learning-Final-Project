@@ -1,4 +1,4 @@
-# Deep-Learning-Final-Project
+# DeepSentiment: Tweet Sentiment Analysis using BERT and Deep Learning
 
 ## Authors
 - Dhyey Mavani
