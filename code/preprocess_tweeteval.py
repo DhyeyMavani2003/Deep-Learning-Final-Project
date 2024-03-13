@@ -87,11 +87,6 @@ emoji_mapping = {
     ":/" : "meh"
 }
 
-""" TODO: Line 6979 "@user Thems the breaks. I may have made more $ from the Fire Phone than Amazon did. ;)"
-       -> Line 6970 "user them break may made fire phone amazon di would wink,2,positive"
-    Where is the "would" coming from?
-"""
-
 def expand_contractions(text, contractions_mapping):
     contractions_pattern = re.compile('({})'.format('|'.join(contractions_mapping.keys())), 
                                       flags=re.IGNORECASE|re.DOTALL)
