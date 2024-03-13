@@ -10,6 +10,7 @@ from transformers import BertTokenizer
 from torch.utils.data import DataLoader, RandomSampler, SequentialSampler, TensorDataset
 import torch
 import warnings
+import os
 warnings.filterwarnings('ignore')
 
 # Stopwords list
@@ -38,10 +39,10 @@ contractions_mapping = {
     "how'd": "how did",
     "how'll": "how will",
     "how's": "how is",
-    "i'd": "I would",
-    "i'll": "I will",
-    "i'm": "I am",
-    "i've": "I have",
+    "i'd": "i would",
+    "i'll": "i will",
+    "i'm": "i am",
+    "i've": "i have",
     "isn't": "is not",
     "it's": "it is",
     "let's": "let us",
@@ -78,6 +79,17 @@ contractions_mapping = {
     "you've": "you have",
 }
 
+# TODO: ASCII Emoji Mapping?
+# Valuable sentiment information in emoji usage, right now they're just removed with the other special characters
+emoji_mapping = {
+    ":)" : "happy",
+    ":(" : "sad",
+    ";)" : "wink",
+    ":/" : "meh"
+}
+
+# TODO: expand contractions, remove characters, and then expand contractions again with special characters removed
+#       i.e. both "don't" and "dont" should become "do not"
 def expand_contractions(text, contractions_mapping):
     contractions_pattern = re.compile('({})'.format('|'.join(contractions_mapping.keys())), 
                                       flags=re.IGNORECASE|re.DOTALL)
@@ -139,6 +151,12 @@ df = pd.DataFrame({
 
 print(df.head()) # Check the first few rows of the DataFrame
 
+# Make CSV File for preprocessed data prior to BERT tokenization
+os.makedirs('csv', exist_ok=True)  
+df.to_csv('csv/pre-token.csv', index=False)
+
+# Just remember...the WWAT isn't over until Sunday evening ;) –> rememberth wwat sunday even
+
 # Load the BERT tokenizer.
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
@@ -170,6 +188,10 @@ for sent in df['Text']:
     
     # And its attention mask (simply differentiates padding from non-padding).
     attention_masks.append(encoded_dict['attention_mask'])
+
+# Make CSV file of tokenized inputs and attention masks (to look under the hood)
+# bdf = pd.DataFrame({'Input IDs': input_ids, 'Attention Masks': attention_masks, 'Labels': train_labels})
+# bdf.to_csv('csv/post-token.csv', index=False)
 
 # Convert the lists into tensors.
 input_ids = torch.cat(input_ids, dim=0)
