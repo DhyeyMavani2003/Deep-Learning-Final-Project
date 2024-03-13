@@ -172,8 +172,6 @@ print(df.head()) # Check the first few rows of the DataFrame
 os.makedirs('../data/tweeteval/sentiment/csv', exist_ok=True)  
 df.to_csv('../data/tweeteval/sentiment/csv/pre-token.csv', index=False)
 
-# Just remember...the WWAT isn't over until Sunday evening ;) –> rememberth wwat sunday even
-
 # Load the BERT tokenizer.
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 
