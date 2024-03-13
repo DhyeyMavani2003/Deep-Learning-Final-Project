@@ -79,8 +79,7 @@ contractions_mapping = {
     "you've": "you have",
 }
 
-# TODO: ASCII Emoji Mapping?
-# Valuable sentiment information in emoji usage, right now they're just removed with the other special characters
+# Emoji mapping
 emoji_mapping = {
     ":)" : "happy",
     ":(" : "sad",
@@ -88,8 +87,11 @@ emoji_mapping = {
     ":/" : "meh"
 }
 
-# TODO: expand contractions, remove characters, and then expand contractions again with special characters removed
-#       i.e. both "don't" and "dont" should become "do not"
+""" TODO: Line 6979 "@user Thems the breaks. I may have made more $ from the Fire Phone than Amazon did. ;)"
+       -> Line 6970 "user them break may made fire phone amazon di would wink,2,positive"
+    Where is the "would" coming from?
+"""
+
 def expand_contractions(text, contractions_mapping):
     contractions_pattern = re.compile('({})'.format('|'.join(contractions_mapping.keys())), 
                                       flags=re.IGNORECASE|re.DOTALL)
@@ -103,6 +105,12 @@ def expand_contractions(text, contractions_mapping):
     expanded_text = contractions_pattern.sub(expand_match, text)
     return expanded_text
 
+def replace_emoji(string, emoji_dict):
+    pattern = r'(?<!\w)(?:' + '|'.join(re.escape(emoji) for emoji in emoji_dict.keys()) + r')(?!\w)'
+    def replace(match):
+        return emoji_dict.get(match.group(0), match.group(0))
+    return re.sub(pattern, replace, string)
+
 # Preprocess function incorporating additional steps
 def preprocess(text, use_stemming=True):
     # Lowercase
@@ -113,8 +121,17 @@ def preprocess(text, use_stemming=True):
     text = re.sub(r'@\w+', '@user', text)
     # Expand contractions
     text = expand_contractions(text, contractions_mapping)
+    # Replace ASCII emojis
+    text = replace_emoji(text, emoji_mapping)
     # Remove special characters and numbers
     text = re.sub(r'[^a-z\s]', '', text)
+    # Expand contractions again without special characters
+    c_mapping_no_specials = {}
+    for key, value in contractions_mapping.items():
+        new_key = re.sub(r'[^\w\s]', '', key)
+        c_mapping_no_specials[new_key] = value
+    c_mapping_no_specials.pop("hell")
+    text = expand_contractions(text, c_mapping_no_specials)
     # Tokenize
     tokens = word_tokenize(text)
     # Optionally apply stemming
@@ -152,8 +169,8 @@ df = pd.DataFrame({
 print(df.head()) # Check the first few rows of the DataFrame
 
 # Make CSV File for preprocessed data prior to BERT tokenization
-os.makedirs('csv', exist_ok=True)  
-df.to_csv('csv/pre-token.csv', index=False)
+os.makedirs('../data/tweeteval/sentiment/csv', exist_ok=True)  
+df.to_csv('../data/tweeteval/sentiment/csv/pre-token.csv', index=False)
 
 # Just remember...the WWAT isn't over until Sunday evening ;) –> rememberth wwat sunday even
 
