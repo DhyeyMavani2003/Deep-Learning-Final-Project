@@ -4,17 +4,117 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, TensorDataset
 from transformers import BertTokenizer, BertModel
 from transformers import AdamW, get_linear_schedule_with_warmup
 import time
 import os
 import re
 
-# Import the train, validation and test data from .pt files
-train_data = torch.load('../data/tweeteval/sentiment/csv/post-token-train-data.pt')
-val_data = torch.load('../data/tweeteval/sentiment/csv/post-token-val-data.pt')
-test_data = torch.load('../data/tweeteval/sentiment/csv/post-token-test-data.pt')
+# Load the data
+df_train = pd.read_csv('../data/tweeteval/sentiment/csv/pre-token-train-data.csv')
+df_val = pd.read_csv('../data/tweeteval/sentiment/csv/pre-token-val-data.csv')
+df_test = pd.read_csv('../data/tweeteval/sentiment/csv/pre-token-test-data.csv')
+
+# Load the BERT tokenizer.
+tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+
+# Tokenize all of the sentences and map the tokens to their word IDs for df_train
+train_input_ids = []
+train_attention_masks = []
+
+for sent in df_train['Text']:
+    encoded_dict = tokenizer.encode_plus(
+                        sent,
+                        add_special_tokens=True,
+                        truncation=True,
+                        max_length=256,
+                        pad_to_max_length=True,
+                        return_attention_mask=True,
+                        return_tensors='pt',
+                   )
+    
+    train_input_ids.append(encoded_dict['input_ids'])
+    train_attention_masks.append(encoded_dict['attention_mask'])
+
+train_input_ids = torch.cat(train_input_ids, dim=0)
+train_attention_masks = torch.cat(train_attention_masks, dim=0)
+train_labels = torch.tensor(df_train['Label_ID'].values.astype(int))
+
+train_data = TensorDataset(train_input_ids, train_attention_masks, train_labels)
+train_dataloader = DataLoader(train_data, batch_size=32, shuffle=True)
+
+# Preview the tokenized train data
+print("################ Tokenized Train Data Preview: #####################")
+print(train_data[0]) # Check the first few rows of the DataFrame
+print("###################################################################")
+
+# Tokenize all of the sentences and map the tokens to their word IDs for df_val
+val_input_ids = []
+val_attention_masks = []
+
+for sent in df_val['Text']:
+    encoded_dict = tokenizer.encode_plus(
+                        sent,
+                        add_special_tokens=True,
+                        truncation=True,
+                        max_length=256,
+                        pad_to_max_length=True,
+                        return_attention_mask=True,
+                        return_tensors='pt',
+                   )
+    
+    val_input_ids.append(encoded_dict['input_ids'])
+    val_attention_masks.append(encoded_dict['attention_mask'])
+
+val_input_ids = torch.cat(val_input_ids, dim=0)
+val_attention_masks = torch.cat(val_attention_masks, dim=0)
+val_labels = torch.tensor(df_val['Label_ID'].values.astype(int))
+
+val_data = TensorDataset(val_input_ids, val_attention_masks, val_labels)
+val_dataloader = DataLoader(val_data, batch_size=32, shuffle=True)
+
+# Preview the tokenized validation data
+print("################ Tokenized Validation Data Preview: ################")
+print(val_data[0]) # Check the first few rows of the DataFrame
+print("###################################################################")
+
+# Tokenize all of the sentences and map the tokens to their word IDs for df_test
+test_input_ids = []
+test_attention_masks = []
+
+for sent in df_test['Text']:
+    encoded_dict = tokenizer.encode_plus(
+                        sent,
+                        add_special_tokens=True,
+                        truncation=True,
+                        max_length=256,
+                        pad_to_max_length=True,
+                        return_attention_mask=True,
+                        return_tensors='pt',
+                   )
+    
+    test_input_ids.append(encoded_dict['input_ids'])
+    test_attention_masks.append(encoded_dict['attention_mask'])
+
+test_input_ids = torch.cat(test_input_ids, dim=0)
+test_attention_masks = torch.cat(test_attention_masks, dim=0)
+test_labels = torch.tensor(df_test['Label_ID'].values.astype(int))
+
+test_data = TensorDataset(test_input_ids, test_attention_masks, test_labels)
+test_dataloader = DataLoader(test_data, batch_size=32, shuffle=True)
+
+# Preview the tokenized test data
+print("################ Tokenized Test Data Preview: ######################")
+print(test_data[0]) # Check the first few rows of the DataFrame
+print("###################################################################")
+
+# Save post-tokenized data separately [NOT SAVING FOR NOW SINCE THEY ARE TOO BIG]
+#torch.save(train_data, '../data/tweeteval/sentiment/csv/post-token-train-data.pt')
+#torch.save(val_data, '../data/tweeteval/sentiment/csv/post-token-val-data.pt')
+#torch.save(test_data, '../data/tweeteval/sentiment/csv/post-token-test-data.pt')
+
+print("Data tokenization completed!")
 
 class TweetEvalDataset(Dataset):
     def __init__(self, data):
