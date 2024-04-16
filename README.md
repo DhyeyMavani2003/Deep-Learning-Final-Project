@@ -22,5 +22,5 @@ This project aims to analyze sentiment in tweets data using Deep Learning models
 
 2. **Preprocessing:** You can start by navigating to `./code` relative path. There you will see our preprocessing script `preprocess_tweeteval.py`. In order to execute this Python script you can run the command `python preprocess_tweeteval.py` on your terminal. This will run the script, which in turn accesses the raw `.txt` data, preprocesses it, and initializes the appropriate csv files at `./data/tweeteval/sentiment/csv`
 
-3. **Tokenization and Baseline Model Training, Validation, Testing:** You can refer to the Google Colab notebook, which has the entire code for the same at [https://colab.research.google.com/drive/1p4YI8XAXpCA_s4C5RadpVkIt9hEqY3N8?usp=sharing](https://colab.research.google.com/drive/1b4gwoDMAqUjwjMp2fTeIZdSxGYxaBSb2?usp=sharing)
+3. **Tokenization and Baseline Model Training, Validation, Testing:** For checkpointed and saved code results as a snapshot, please feel free to navigate to `./code/`, alternatively, you can refer to the Google Colab notebook, which has the entire code for the same at [https://colab.research.google.com/drive/1p4YI8XAXpCA_s4C5RadpVkIt9hEqY3N8?usp=sharing](https://colab.research.google.com/drive/1b4gwoDMAqUjwjMp2fTeIZdSxGYxaBSb2?usp=sharing)
 
