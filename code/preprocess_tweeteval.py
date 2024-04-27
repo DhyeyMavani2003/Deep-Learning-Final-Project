@@ -87,23 +87,10 @@ emoji_mapping = {
     ":/" : "meh"
 }
 
-def expand_contractions(text, contractions_mapping):
-    contractions_pattern = re.compile('({})'.format('|'.join(contractions_mapping.keys())), 
-                                      flags=re.IGNORECASE|re.DOTALL)
-    def expand_match(contraction):
-        match = contraction.group(0)
-        first_char = match[0]
-        expanded_contraction = contractions_mapping.get(match) if contractions_mapping.get(match) else contractions_mapping.get(match.lower())
-        expanded_contraction = first_char+expanded_contraction[1:]
-        return expanded_contraction
-    
-    expanded_text = contractions_pattern.sub(expand_match, text)
-    return expanded_text
-
-def replace_emoji(string, emoji_dict):
-    pattern = r'(?<!\w)(?:' + '|'.join(re.escape(emoji) for emoji in emoji_dict.keys()) + r')(?!\w)'
+def replace_words(string, dict):
+    pattern = r'(?<!\w)(?:' + '|'.join(re.escape(word) for word in dict.keys()) + r')(?!\w)'
     def replace(match):
-        return emoji_dict.get(match.group(0), match.group(0))
+        return dict.get(match.group(0), match.group(0))
     return re.sub(pattern, replace, string)
 
 # Preprocess function incorporating additional steps
@@ -115,9 +102,9 @@ def preprocess(text, use_stemming=True):
     # Replace user mentions with a placeholder
     text = re.sub(r'@\w+', '@user', text)
     # Expand contractions
-    text = expand_contractions(text, contractions_mapping)
+    text = replace_words(text, contractions_mapping)
     # Replace ASCII emojis
-    text = replace_emoji(text, emoji_mapping)
+    text = replace_words(text, emoji_mapping)
     # Remove special characters and numbers
     text = re.sub(r'[^a-z\s]', '', text)
     # Expand contractions again without special characters
@@ -126,7 +113,7 @@ def preprocess(text, use_stemming=True):
         new_key = re.sub(r'[^\w\s]', '', key)
         c_mapping_no_specials[new_key] = value
     c_mapping_no_specials.pop("hell")
-    text = expand_contractions(text, c_mapping_no_specials)
+    text = replace_words(text, c_mapping_no_specials)
     # Tokenize
     tokens = word_tokenize(text)
     # Optionally apply stemming
