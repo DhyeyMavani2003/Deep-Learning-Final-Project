@@ -6,16 +6,18 @@ For our purposes, we have retained just the "sentiment" subset of the original t
 
 ## Directory Structure
 
-{dataset} = - train_text.txt
-			- train_labels.txt
-			- val_text.txt
-			- val_labels.txt
-			- test_text.txt
+{dataset} = 
 - sentiment
-	- {dataset}
+	- train_text.txt
+	- train_labels.txt
+	- val_text.txt
+	- val_labels.txt
+	- test_text.txt
 	- mapping.txt
-    - csv
-        - pre-token.csv
+	- csv
+   		- pre-token-test-data.csv
+		- pre-token-train-data.csv
+		- pre-token-val-data.csv 
 
 ## File Format
 
