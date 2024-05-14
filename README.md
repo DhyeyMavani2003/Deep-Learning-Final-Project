@@ -1,4 +1,4 @@
-# DeepSentiment: Tweet Sentiment Analysis using BERT and Deep Learning
+# DeepSentiment: Tweet Sentiment Analysis using BERT-based models and LLMs
 
 ## Authors
 - Dhyey Mavani
