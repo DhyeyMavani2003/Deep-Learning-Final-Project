@@ -17,7 +17,15 @@ This project, DeepSentiment, leverages advanced deep learning techniques, partic
 - Pandas
 - Transformers
 - Tensorflow
+- Torch
 - NLTK
+- Scikit-Learn
+- Matplotlib
+- Seaborn
+- LangChain
+- Auto-GPTq
+- Accelerate
+- Huggingface_Hub
 - OS and System Libraries
 - GitHub Copilot
 
