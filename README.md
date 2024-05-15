@@ -1,4 +1,4 @@
-# DeepSentiment: Tweet Sentiment Analysis using BERT-based models and LLMs
+# DeepSentiment: Tweet Sentiment Analysis using BERT-based models & LLMs
 
 ## Authors
 - Dhyey Mavani, Amherst College'25
@@ -9,16 +9,19 @@
 
 ## Abstract
 
-This project aims to analyze sentiment in tweets data using Deep Learning models, specifically BERT. The process involves cleaning and preprocessing the tweets data, followed by fine-tuning the BERT model to improve sentiment prediction accuracy. Additionally, other Deep Learning models will be explored to compare their performance with BERT. By leveraging the power of Deep Learning, the project seeks to gain insights into the sentiment patterns present in the tweets data and provide valuable information for sentiment analysis tasks.
+This project, DeepSentiment, leverages advanced deep learning techniques, particularly BERT (Bidirectional Encoder Representations from Transformers) and LLMs (Large Language Models), to analyze and predict sentiment from tweets. The primary aim is to perform sentiment analysis using BERT-based models, and observe the effectiveness of other contemporary LLM-based techniques such as multi-shot learning in classification of the entries. The insights garnered from tweet sentiment patterns can enhance understanding and implementation of state-of-the-art deep learning techniques in diverse sentiment analysis applications such as financial markets, and behavioral economics.
 
 ## Tools and Technologies Used
- Please refer to `requirements.txt` for requirements related to running `.py` files in the project
 - Python
 - Numpy
 - Pandas
+- Transformers
 - Tensorflow
+- NLTK
 - OS and System Libraries
 - GitHub Copilot
+
+_Note:_  Please refer to `requirements.txt` for requirements related to running `.py` files in the project.
 
 ## Instructions to Run The Project
 
@@ -27,6 +30,8 @@ This project aims to analyze sentiment in tweets data using Deep Learning models
 2. **Preprocessing:** You can start by navigating to `./code` relative path. There you will see our preprocessing script `preprocess_tweeteval.py`. In order to execute this Python script you can run the command `python preprocess_tweeteval.py` on your terminal. This will run the script, which in turn accesses the raw `.txt` data, preprocesses it, and initializes the appropriate csv files at `./data/tweeteval/sentiment/csv`
 
 3. **Tokenization and Model(s) Training, Validation, Testing:** For checkpointed and saved code results as a snapshot, please feel free to navigate to `./code/New_tokenization_and_naive_bayes_and_bert_model_train_val_test.ipynb`, there you will also have the ability to open the same with Google Colab and reproduce our results.
+  
+4. **Using LLM Model(s) through Multi-shot Learning:** For checkpointed and saved code results as a snapshot, please feel free to navigate to `./code/Phi_Sentiment.ipynb`, there you will also have the ability to open the same with Google Colab and reproduce our results.
 
 ## License
 
