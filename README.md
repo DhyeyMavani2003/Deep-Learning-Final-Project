@@ -1,8 +1,11 @@
 # DeepSentiment: Tweet Sentiment Analysis using BERT-based models and LLMs
 
 ## Authors
-- Dhyey Mavani
-- Carl May
+- Dhyey Mavani, Amherst College'25
+- Carl May, Williams College'25
+
+## Professor & Project Advisor
+- Professor Bálint Gyires-Tóth, AIT Budapest and NVIDIA
 
 ## Abstract
 
@@ -25,3 +28,6 @@ This project aims to analyze sentiment in tweets data using Deep Learning models
 
 3. **Tokenization and Model(s) Training, Validation, Testing:** For checkpointed and saved code results as a snapshot, please feel free to navigate to `./code/New_tokenization_and_naive_bayes_and_bert_model_train_val_test.ipynb`, there you will also have the ability to open the same with Google Colab and reproduce our results.
 
+## License
+
+This work is available under the Apache license as detailed in the `./` root directory of the project through the LICENSE file.
