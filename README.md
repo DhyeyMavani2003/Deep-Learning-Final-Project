@@ -29,7 +29,7 @@ _Note:_  Please refer to `requirements.txt` for requirements related to running 
 
 2. **Preprocessing:** You can start by navigating to `./code` relative path. There you will see our preprocessing script `preprocess_tweeteval.py`. In order to execute this Python script you can run the command `python preprocess_tweeteval.py` on your terminal. This will run the script, which in turn accesses the raw `.txt` data, preprocesses it, and initializes the appropriate csv files at `./data/tweeteval/sentiment/csv`
 
-3. **Tokenization and Model(s) Training, Validation, Testing:** For checkpointed and saved code results as a snapshot, please feel free to navigate to `./code/New_tokenization_and_naive_bayes_and_bert_model_train_val_test.ipynb`, there you will also have the ability to open the same with Google Colab and reproduce our results.
+3. **Tokenization and Model(s) Training, Validation, Testing:** For checkpointed and saved code results as a snapshot, please feel free to navigate to `./code/tokenization_naive_bayes_and_bert_models_train_val_test_code.ipynb`, there you will also have the ability to open the same with Google Colab and reproduce our results.
   
 4. **Using LLM Model(s) through Multi-shot Learning:** For checkpointed and saved code results as a snapshot, please feel free to navigate to `./code/Phi_Sentiment.ipynb`, there you will also have the ability to open the same with Google Colab and reproduce our results.
 
