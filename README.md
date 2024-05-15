@@ -31,7 +31,7 @@ _Note:_  Please refer to `requirements.txt` for requirements related to running 
 
 3. **Tokenization and Model(s) Training, Validation, Testing:** For checkpointed and saved code results as a snapshot, please feel free to navigate to `./code/tokenization_naive_bayes_and_bert_models_train_val_test_code.ipynb`, there you will also have the ability to open the same with Google Colab and reproduce our results.
   
-4. **Using LLM Model(s) through Multi-shot Learning:** For checkpointed and saved code results as a snapshot, please feel free to navigate to `./code/Phi_Sentiment.ipynb`, there you will also have the ability to open the same with Google Colab and reproduce our results.
+4. **Using Microsoft Phi LLM Model through Multi-shot Learning:** For checkpointed and saved code results as a snapshot, please feel free to navigate to `./code/Phi_Sentiment.ipynb`, there you will also have the ability to open the same with Google Colab and reproduce our results.
 
 ## License
 
